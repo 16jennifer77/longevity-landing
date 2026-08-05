@@ -122,7 +122,7 @@
       <div class="wrap hdr-in">
         <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
         <a class="hdr-logo" href="#" aria-label="Biohackr Health home">
-          <img src="assets/logo-horizontal.png" alt="Biohackr Health">
+          <img src="assets/logo-horizontal-white.png" alt="Biohackr Health">
         </a>
         <nav class="hdr-nav" id="hdrNav" aria-label="Main">${links}</nav>
         <div class="hdr-actions">
