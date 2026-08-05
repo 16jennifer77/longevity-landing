@@ -1518,7 +1518,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .cta-photo { position: relative; overflow: hidden; }
 .cta-photo-bg { position: absolute; inset: 0; }
 .cta-photo-bg img { width: 100%; height: 100%; object-fit: cover; }
-.cta-photo-scrim { position: absolute; inset: 0; background: rgba(0,27,63,.86); }
+.cta-photo-scrim { position: absolute; inset: 0; background: rgba(0,27,63,.78); }
 
 /* ---- mobile ---- */
 @media (max-width: 900px) {
