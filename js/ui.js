@@ -47,75 +47,19 @@
     arrow: I('<path d="M10 24h28M28 14l10 10-10 10"/>')
   };
 
-  /* panel accents by category */
-  const ACCENTS = {
-    'IV Therapy': '#36b4e5',
-    'Injections & Boosts': '#7ed8c3',
-    'NAD+ Therapy': '#fcc557',
-    'Diagnostics & Testing': '#a9c9f0',
-    'Hormone Therapy': '#d8b4e2',
-    'Weight Loss': '#9cd3ca',
-    'Hair Restoration': '#f08a6e',
-    'Skin & Aesthetics': '#f8c7c6',
-    'IV Programs': '#36b4e5',
-    'Injection Packs': '#7ed8c3',
-    'NAD+ Programs': '#fcc557',
-    'Testing Programs': '#a9c9f0',
-    'Kinetic Pulse Wave': '#9cd3ca',
-    'Hair & Aesthetics': '#f08a6e',
-    "Men's Health": '#36b4e5',
-    "Women's Health": '#f8c7c6',
-    'Consultations': '#ec6e6b',
-    'Memberships': '#ffffff',
-    'Biohackr Skin': '#001b3f'
-  };
-
-  function visualHtml(p, ctx) {
-    if (p.image) {
-      const fit = /\.png$/i.test(p.image) ? 'pv-contain' : 'pv-cover';
-      return `<div class="pv pv-photo ${fit}"><img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy"></div>`;
-    }
-    const accent = ACCENTS[p.category] || '#9cd3ca';
-    const tone = p.type === 'membership' ? 'pv-red' : (p.type === 'consult' ? 'pv-light' : 'pv-navy');
-    const icon = ICONS[p.icon] || ICONS.package;
-    return `<div class="pv ${tone}" style="--accent:${accent}">
-      <div class="pv-helix" aria-hidden="true"></div>
-      <div class="pv-icon">${icon}</div>
-    </div>`;
-  }
-
-  function priceHtml() { return ''; }
-
-  function card(p) {
-    const badge = p.badge && !/\$|save|value|offer/i.test(p.badge) ? `<span class="badge">${esc(p.badge)}</span>` : '';
-    const meta = [];
-    if (p.duration) meta.push(`${p.duration} min`);
-    if (p.size) meta.push(p.size);
-    return `<article class="tile" data-type="${esc(p.type)}">
-      <a class="tile-media" href="product.html?id=${encodeURIComponent(p.id)}" aria-label="${esc(p.name)}">
-        ${visualHtml(p, 'card')}${badge}
-        <span class="tile-hover"><span class="btn btn-white">Learn more</span></span>
-      </a>
-      <div class="tile-info">
-        <h3 class="tile-name"><a href="product.html?id=${encodeURIComponent(p.id)}">${esc(p.name)}</a></h3>
-      </div>
-      <p class="tile-cat">${esc(p.category)}${meta.length ? ` · ${esc(meta.join(' · '))}` : ''}</p>
-    </article>`;
-  }
-
   /* ---------------- header / footer ---------------- */
-  /* One-page site: every nav target is a same-page anchor. */
+  /* One-page site: every nav target is a same-page anchor (#key). */
   const NAV = [
-    ['#signs', 'Warning Signs', 'signs'],
-    ['#services', 'What We Do', 'services'],
-    ['#team', 'Our Team', 'team'],
-    ['#reviews', 'Reviews', 'reviews'],
-    ['#faq', 'FAQ', 'faq']
+    ['signs', 'Warning Signs'],
+    ['services', 'What We Do'],
+    ['team', 'Our Team'],
+    ['reviews', 'Reviews'],
+    ['faq', 'FAQ']
   ];
 
   function headerHtml(active) {
-    const links = NAV.map(([href, label, key]) =>
-      `<a href="${href}" class="${key === active ? 'active' : ''}">${label}</a>`).join('');
+    const links = NAV.map(([key, label]) =>
+      `<a href="#${key}" class="${key === active ? 'active' : ''}">${label}</a>`).join('');
     return `
     <div class="announce"><p>Only 20 free longevity consults available each month, <a href="#claim">claim yours before they fill</a><span class="announce-sep">·</span><a href="tel:+16506707460" class="announce-tel">(650) 670-7460</a></p></div>
     <header class="hdr" id="hdr">
@@ -168,74 +112,6 @@
     </footer>`;
   }
 
-  /* ---------------- cart drawer ---------------- */
-  function drawerHtml() {
-    return `
-    <div class="drawer-veil" id="drawerVeil" hidden></div>
-    <aside class="drawer" id="cartDrawer" aria-label="Cart" aria-hidden="true">
-      <div class="drawer-head">
-        <h3>Your cart <span id="drawerCount"></span></h3>
-        <button class="drawer-x" id="drawerClose" aria-label="Close cart">×</button>
-      </div>
-      <div class="drawer-body" id="drawerBody"></div>
-      <div class="drawer-foot" id="drawerFoot"></div>
-    </aside>
-    <div class="toasts" id="toasts" aria-live="polite"></div>`;
-  }
-
-  function renderDrawer() {
-    const t = BH.cartTotals();
-    const body = $('#drawerBody');
-    const foot = $('#drawerFoot');
-    $('#drawerCount').textContent = t.lines.length ? `(${BH.cartCount()})` : '';
-    if (!t.lines.length) {
-      body.innerHTML = `<div class="drawer-empty">
-        <p>Your cart is empty.</p>
-        <a class="btn btn-navy" href="browse.html">Browse our services</a>
-      </div>`;
-      foot.innerHTML = '';
-      return;
-    }
-    body.innerHTML = t.lines.map(l => `
-      <div class="dline">
-        <a class="dline-media" href="product.html?id=${encodeURIComponent(l.id)}">${visualHtml(l.product, 'mini')}</a>
-        <div class="dline-info">
-          <p class="dline-name">${esc(l.product.name)}</p>
-          ${l.variantLabel ? `<p class="dline-variant">${esc(l.variantLabel)}</p>` : ''}
-          <p class="dline-price">${l.unitPrice === 0 ? 'Free' : BH.money(l.unitPrice) + (l.product.unit ? l.product.unit : '')}</p>
-          <div class="qty">
-            <button type="button" data-dq="-1" data-id="${esc(l.id)}" data-v="${l.variant ?? ''}" aria-label="Decrease quantity">−</button>
-            <span>${l.qty}</span>
-            <button type="button" data-dq="1" data-id="${esc(l.id)}" data-v="${l.variant ?? ''}" aria-label="Increase quantity" ${l.product.type === 'membership' ? 'disabled' : ''}>+</button>
-            <button type="button" class="dline-rm" data-rm data-id="${esc(l.id)}" data-v="${l.variant ?? ''}">Remove</button>
-          </div>
-        </div>
-        <div class="dline-total">${l.lineTotal === 0 ? '—' : BH.money(l.lineTotal)}</div>
-      </div>`).join('');
-    foot.innerHTML = `
-      <div class="drawer-sub"><span>Subtotal</span><strong>${BH.money(t.subtotal)}</strong></div>
-      ${t.monthly ? `<p class="drawer-note">Includes ${BH.money(t.monthly)}/month in memberships (6-month minimum).</p>` : ''}
-      <p class="drawer-note">No shipping, purchases are redeemed at the clinic. We'll reach out to schedule.</p>
-      <a class="btn btn-red btn-block" href="checkout.html">Checkout</a>
-      <a class="drawer-viewcart" href="cart.html">View full cart</a>`;
-  }
-
-  function openDrawer() {
-    $('#cartDrawer').classList.add('open');
-    $('#cartDrawer').setAttribute('aria-hidden', 'false');
-    $('#drawerVeil').hidden = false;
-    requestAnimationFrame(() => $('#drawerVeil').classList.add('show'));
-    document.body.style.overflow = 'hidden';
-    renderDrawer();
-  }
-  function closeDrawer() {
-    $('#cartDrawer').classList.remove('open');
-    $('#cartDrawer').setAttribute('aria-hidden', 'true');
-    $('#drawerVeil').classList.remove('show');
-    document.body.style.overflow = '';
-    setTimeout(() => { const v = $('#drawerVeil'); if (v) v.hidden = true; }, 280);
-  }
-
   /* ---------------- toasts ---------------- */
   function toast(msg, kind) {
     const root = $('#toasts');
@@ -246,14 +122,6 @@
     root.appendChild(el);
     requestAnimationFrame(() => el.classList.add('in'));
     setTimeout(() => { el.classList.remove('in'); setTimeout(() => el.remove(), 350); }, 2600);
-  }
-
-  function updateCount() {
-    const n = BH.cartCount();
-    const el = $('#cartCount');
-    if (!el) return;
-    el.textContent = n;
-    el.hidden = n === 0;
   }
 
   /* ---------------- reveal on scroll ---------------- */
@@ -322,5 +190,5 @@
     reveals();
   }
 
-  window.BHUI = { init, card, visualHtml, priceHtml, toast, openDrawer, closeDrawer, icons: ICONS, esc, reveals };
+  window.BHUI = { init, toast, icons: ICONS, esc, reveals };
 })();
