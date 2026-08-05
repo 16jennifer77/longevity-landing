@@ -1543,10 +1543,12 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   .hdr-in { position: relative; justify-content: flex-start; }
   .hdr-logo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
   .hdr-actions { margin-left: auto; }
-  .hdr-logo img { height: 22px; }
-  .hdr-claim { padding: 9px 11px; font-size: 10.5px; letter-spacing: .06em; }
+  .hdr-claim { padding: 8px 9px; font-size: 10px; letter-spacing: .04em; }
 }
 @media (max-width: 370px) {
-  .hdr-logo img { height: 18px; }
-  .hdr-claim { padding: 8px 8px; font-size: 9.5px; }
+  /* full-size logo cannot be dead-center here without hitting the button:
+     fall back to centering it in the space between burger and button */
+  .hdr-logo { position: static; transform: none; margin: 0 auto; }
+  .hdr-actions { margin-left: 0; }
+  .hdr-claim { padding: 7px 7px; font-size: 9px; letter-spacing: .02em; }
 }
