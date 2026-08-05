@@ -106,7 +106,6 @@
   /* ---------------- header / footer ---------------- */
   /* One-page site: every nav target is a same-page anchor. */
   const NAV = [
-    ['#experience', 'Inside the Clinic', 'experience'],
     ['#signs', 'Warning Signs', 'signs'],
     ['#services', 'What We Do', 'services'],
     ['#team', 'Our Team', 'team'],
@@ -144,7 +143,6 @@
         </div>
         <nav class="ftr-col" aria-label="Explore">
           <h4>Explore</h4>
-          <a href="#experience">Inside the clinic</a>
           <a href="#signs">Warning signs</a>
           <a href="#team">Our physician team</a>
           <a href="#why">Why Biohackr Health</a>

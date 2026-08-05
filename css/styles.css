@@ -1427,13 +1427,17 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
    exists; then the video fades in (see index.html boot JS).
    ============================================================ */
 
+/* ---- warning-sign card images ---- */
+.sign-media { display: block; margin: -28px -24px 16px; border-radius: var(--radius) var(--radius) 0 0; overflow: hidden; }
+.sign-media img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+
 /* ---- shared film slot ---- */
 .film { position: relative; overflow: hidden; background-size: cover; background-position: center; }
 .film video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .9s ease; }
 .film.film-on video { opacity: 1; }
 
 /* ---- one photo grade for the whole page ---- */
-.clinic-gallery img, .svc-media img, .why-media-bg img, .cta-photo-bg img, .film {
+.sign-media img, .why-media-bg img, .cta-photo-bg img, .film {
   filter: saturate(.97) contrast(1.05) brightness(.96);
 }
 
@@ -1442,7 +1446,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .hero5.hero-media .hero-film { position: absolute; inset: 0; z-index: 0; }
 .hero5.hero-media .hero-scrim {
   position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(100deg, rgba(0,27,63,.88) 0%, rgba(0,27,63,.72) 46%, rgba(0,27,63,.42) 100%);
+  background: linear-gradient(100deg, rgba(0,27,63,.82) 0%, rgba(0,27,63,.6) 46%, rgba(0,27,63,.28) 100%);
 }
 .hero5.hero-media .hero5-in { position: relative; z-index: 2; }
 .hero5.hero-media .ticker { position: relative; z-index: 2; }
