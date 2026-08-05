@@ -1537,3 +1537,16 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   .hero5.hero-media .hero-scrim { background: linear-gradient(180deg, rgba(0,27,63,.92) 0%, rgba(0,27,63,.8) 100%); }
 }
 
+
+/* ---- mobile header: logo truly centered (2026-08-04) ---- */
+@media (max-width: 700px) {
+  .hdr-in { position: relative; justify-content: flex-start; }
+  .hdr-logo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+  .hdr-actions { margin-left: auto; }
+  .hdr-logo img { height: 22px; }
+  .hdr-claim { padding: 9px 11px; font-size: 10.5px; letter-spacing: .06em; }
+}
+@media (max-width: 370px) {
+  .hdr-logo img { height: 18px; }
+  .hdr-claim { padding: 8px 8px; font-size: 9.5px; }
+}
