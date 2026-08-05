@@ -1537,17 +1537,3 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   .hero5.hero-media .hero-scrim { background: linear-gradient(180deg, rgba(0,27,63,.92) 0%, rgba(0,27,63,.8) 100%); }
 }
 
-/* ---- bar swap (2026-08-04): announce bar white, header bar navy ---- */
-.announce { background: #fff; color: var(--navy); border-bottom: 1px solid var(--hairline); }
-.announce a { color: var(--navy); }
-.announce-sep { opacity: .45; }
-.hdr {
-  background: rgba(0, 27, 63, .95);
-  border-bottom: 1px solid rgba(255, 255, 255, .12);
-}
-.hdr-nav a { color: #fff; }
-.hdr-ic { color: #fff; }
-.hdr-ic:hover { background: rgba(255, 255, 255, .12); }
-@media (max-width: 960px) {
-  .nav-burger span { background: #fff; }
-}
