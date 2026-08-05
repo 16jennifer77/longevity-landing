@@ -1538,17 +1538,3 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 }
 
 
-/* ---- mobile header: logo truly centered (2026-08-04) ---- */
-@media (max-width: 700px) {
-  .hdr-in { position: relative; justify-content: flex-start; }
-  .hdr-logo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
-  .hdr-actions { margin-left: auto; }
-  .hdr-claim { padding: 8px 9px; font-size: 10px; letter-spacing: .04em; }
-}
-@media (max-width: 370px) {
-  /* full-size logo cannot be dead-center here without hitting the button:
-     fall back to centering it in the space between burger and button */
-  .hdr-logo { position: static; transform: none; margin: 0 auto; }
-  .hdr-actions { margin-left: 0; }
-  .hdr-claim { padding: 7px 7px; font-size: 9px; letter-spacing: .02em; }
-}
