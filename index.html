@@ -348,7 +348,10 @@
     'No credit card, no commitment, no pressure'
   ].map(b => `<li>${IC.check}<span>${b}</span></li>`).join('');
 
-  /* claim form */
+  /* claim form (demo only) — on the GHL install the markup is replaced by a
+     real GHL form embed, so these elements may not exist; guard the whole
+     block or the reviews/FAQ rendering below never runs */
+  if (document.getElementById('claimForm') && document.getElementById('cClinic') && document.getElementById('cMode')) {
   let clinic = '', mode = '';
   document.getElementById('cClinic').addEventListener('click', e => {
     const b = e.target.closest('[data-clinic]'); if (!b) return;
@@ -387,6 +390,7 @@
         <p class="claim-fine">Prefer not to wait? Call us at <a href="tel:+16506707460" style="text-decoration:underline">(650) 670-7460</a>.</p>
       </div>`;
   });
+  }
 
   /* reviews, live Google feed, rendered as uniform cards (auto-updates).
      Pulls the clinic's real review data and renders our own equal-size cards;
